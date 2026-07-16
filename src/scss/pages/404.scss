@@ -1,0 +1,26 @@
+@import '../utilities/index';
+
+.error404 {
+
+	.site-main {
+		min-height: 65dvh;
+		text-align: center;
+
+		h1 {
+			@include fluid-clamp((font-size), 390px, 1600px, 40px, 70px);
+			line-height: 1.2;
+			font-family: 700;
+		}
+
+		.text {
+			@include fluid-clamp((font-size), 390px, 1600px, 30px, 40px);
+		}
+
+		.btn {
+			margin: 30px auto;
+			letter-spacing: 1px;
+		}
+
+	}
+
+}

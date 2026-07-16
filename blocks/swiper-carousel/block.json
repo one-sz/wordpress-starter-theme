@@ -1,0 +1,12 @@
+{
+	"name": "acf/swiper-carousel",
+	"title": "Swiper Carousel",
+	"description": "Swiper Carousel block.",
+	"category": "custom",
+	"icon": "format-aside",
+	"keywords": ["swiper carousel", "custom"],
+	"acf": {
+		"mode": "auto",
+		"renderTemplate": "block.php"
+	}
+}

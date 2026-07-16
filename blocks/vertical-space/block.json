@@ -1,0 +1,12 @@
+{
+	"name": "acf/vertical-space",
+	"title": "Vertical Space",
+	"description": "Adds space (padding) between sections.",
+	"category": "custom",
+	"icon": "format-aside",
+	"keywords": ["vertical space", "custom"],
+	"acf": {
+		"mode": "auto",
+		"renderTemplate": "block.php"
+	}
+}

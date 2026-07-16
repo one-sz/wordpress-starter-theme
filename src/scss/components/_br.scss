@@ -1,0 +1,76 @@
+//==============================================
+// Component/Break Rows
+//==============================================
+/* Small */
+.hide-br-sm-up {
+    @include mq('sm') {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+.hide-br-sm-down {
+    @include mq('sm', max) {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+/* Medium */
+.hide-br-md-up {
+    @include mq('md') {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+.hide-br-md-down {
+    @include mq('md', max) {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+/* Large */
+.hide-br-lg-up {
+    @include mq('lg') {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+.hide-br-lg-down {
+    @include mq('lg', max) {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+/* Extra Large */
+.hide-br-xl-up {
+    @include mq('xl') {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+.hide-br-xl-down {
+    @include mq('xl', max) {
+        br {
+            display: none!important;
+        }
+    }
+}
+
+.hide-br {
+    br {
+        display: none!important;
+    }
+}

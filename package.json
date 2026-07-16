@@ -1,0 +1,33 @@
+{
+  "name": "sz-theme",
+  "version": "1.0.0",
+  "type": "module",
+  "author": "S. Z.",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "WordPress",
+    "Theme"
+  ],
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^7.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "sass": "^1.69.3",
+    "sass-embedded": "^1.69.3",
+    "terser": "^5.36.0",
+    "vite": "^7.3.1",
+    "vite-plugin-static-copy": "^3.0.0"
+  },
+  "dependencies": {
+    "bootstrap-scss": "^5.3.8",
+    "headroom.js": "^0.12.0",
+    "swiper": "^12.1.1",
+    "tom-select": "^2.4.3"
+  },
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "watch": "vite build --watch --mode development",
+    "build": "vite build --mode production",
+    "production": "vite build --mode production"
+  }
+}

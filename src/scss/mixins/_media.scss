@@ -1,0 +1,101 @@
+//==============================================
+// Mixins/Media queries
+//==============================================
+@mixin mq($width, $type: min) {
+    @if map.has-key($breakpoints, $width) {
+        $width: map.get($breakpoints, $width);
+        @if $type == max {
+            $width: $width - 1px;
+        }
+        @media only screen and (#{$type}-width: $width) {
+            @content;
+        }
+    }
+}
+
+@mixin mq-between($min-width, $max-width) {
+    @if ( map.has-key($breakpoints, $min-width) & map.has-key($breakpoints, $max-width) ) {
+        $min-width: map.get($breakpoints, $min-width);
+        $max-width: map.get($breakpoints, $max-width);
+        @media only screen and (min-width: $min-width) and (max-width: $max-width) {
+            @content;
+        }
+    }
+}
+
+@mixin mq-orientation($width, $type: min, $orientation: 'ld') {
+    @if map.has-key($breakpoints, $width) {
+        $width: map.get($breakpoints, $width);
+        @if $type == max {
+            $width: $width - 1px;
+        }
+        @if $orientation == 'ld' {
+            @media only screen and (#{$type}-width: $width) and (orientation: landscape) {
+                @content;
+            }
+        }
+        @if $orientation == 'pt' {
+            @media only screen and (#{$type}-width: $width) and (orientation: portrait) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin mq-between-orientation($min-width, $max-width, $orientation: 'ld') {
+    @if ( map.has-key($breakpoints, $min-width) & map.has-key($breakpoints, $max-width) ) {
+        $min-width: map.get($breakpoints, $min-width);
+        $max-width: map.get($breakpoints, $max-width);
+        @if $orientation == 'ld' {
+            @media only screen and (min-width: $min-width) and (max-width: $max-width) and (orientation: landscape) {
+                @content;
+            }
+        }
+        @if $orientation == 'pt' {
+            @media only screen and (min-width: $min-width) and (max-width: $max-width) and (orientation: portrait) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin mq-h($height, $type: min) {
+    @if $type == max {
+        $height: $height - 1px;
+    }
+    @media only screen and (#{$type}-height: $height) {
+        @content;
+    }
+}
+
+@mixin mq-h-orientation($height, $type: min, $orientation: 'ld') {
+    @if $orientation == 'ld' {
+        @media only screen and (#{$type}-height: $height) and (orientation: landscape) {
+            @content;
+        }
+    }
+    @if $orientation == 'pt' {
+        @media only screen and (#{$type}-height: $height) and (orientation: portrait) {
+            @content;
+        }
+    }
+}
+
+@mixin mq-h-between($min-height, $max-height) {
+    @media only screen and (min-height: $min-height) and (max-height: $max-height) {
+        @content;
+    }
+}
+
+@mixin mq-h-between-orientation($min-height, $max-height, $orientation: 'ld') {
+    @if $orientation == 'ld' {
+        @media only screen and (min-height: $min-height) and (max-height: $max-height) and (orientation: landscape) {
+            @content;
+        }
+    }
+    @if $orientation == 'pt' {
+        @media only screen and (min-height: $min-height) and (max-height: $max-height) and (orientation: portrait) {
+            @content;
+        }
+    }
+}

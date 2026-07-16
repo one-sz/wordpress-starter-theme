@@ -1,0 +1,35 @@
+//==============================================
+// Utilites/Typography
+//==============================================
+
+// $base-font-size
+$font-size-xxs: 13px;
+$font-size-xs: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-xxl: 22px;
+$font-size-fhd: 26px;
+
+// $line-height
+$line-height-xs: 1;
+$line-height-sm: 1.15;
+$line-height-base: 1.2;
+$line-height-lg: 1.5;
+$line-height-xl: 2;
+
+// font family
+$font-family-fallback: sans-serif;
+$font-family-base: 'Poppins', $font-family-fallback;
+
+// font weight
+$font-weight-300: 300;//light
+$font-weight-400: 400;//normal
+$font-weight-500: 500;//medium
+$font-weight-600: 600;//semibold
+
+// font weight
+$letter-spacing-1: 1px;//plus
+$letter-spacing-02: -0.2px;//minus
+$letter-spacing-006: -0.06px;//minus
+$letter-spacing-065: -0.65px;//minus

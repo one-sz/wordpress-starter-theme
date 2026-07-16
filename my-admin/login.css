@@ -1,0 +1,268 @@
+body.login {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: calc(100dvh - 60px);
+	padding: 30px 0 !important;
+	background-color: #f9f4eb;
+	overflow: auto;
+}
+
+#login {
+	max-width: 500px;
+	width: 70% !important;
+	background: linear-gradient(90deg, #05050a 0.000%, #05050a 7.692%, #090a0e calc(7.692% + 1px), #090a0e 15.385%, #0d0e12 calc(15.385% + 1px), #0d0e12 23.077%, #121316 calc(23.077% + 1px), #121316 30.769%, #16171a calc(30.769% + 1px), #16171a 38.462%, #1a1b1e calc(38.462% + 1px), #1a1b1e 46.154%, #1e1f22 calc(46.154% + 1px), #1e1f22 53.846%, #222326 calc(53.846% + 1px), #222326 61.538%, #26272a calc(61.538% + 1px), #26272a 69.231%, #292a2d calc(69.231% + 1px), #292a2d 76.923%, #2c2d30 calc(76.923% + 1px), #2c2d30 84.615%, #2e2f33 calc(84.615% + 1px), #2e2f33 92.308%, #303135 calc(92.308% + 1px) 100.000%);
+	padding: 40px !important;
+	border-radius: 16px;
+	box-shadow: 0 20px 60px rgba(0,0,0,.5);
+	box-sizing: border-box;
+}
+.login-action-confirm_admin_email #login {
+	max-width: 590px !important;
+	margin-top: auto !important;
+}
+.login-action-confirm_admin_email .admin-email-confirm-form {
+	color: #fff;
+}
+.login label[for=pw-weak] {
+	color: #f00 !important;
+}
+@media (max-width: 575px) {
+	#login {
+		width: 94% !important;
+		padding: 30px 15px !important;
+	}
+	.login label[for=pw-weak] {
+		font-size: 14px !important;
+	}
+	.login input[type=checkbox], input[type=radio] {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+#login h1 {
+	margin-bottom: 20px;
+	padding: 5px 0;
+	background: #fff;
+	border-radius: 60px;
+	border: 2px solid #c6c6c6;
+}
+.login-action-confirm_admin_email #login h1.admin-email__heading {
+	padding: 5px 15px !important;
+	font-size: 18px !important;
+	font-weight: 500 !important;
+	color: #000 !important;
+	text-transform: capitalize !important;
+	text-align: center !important;
+}
+#login h1 a {
+	width: 65%;
+	height: 80px;
+	margin: auto;
+}
+.login-action-confirm_admin_email p.admin-email__details {
+	margin-top: 8px !important;
+	font-size: 15px !important;
+	font-weight: 500 !important;
+}
+.login-action-confirm_admin_email p.admin-email__details a {
+	display: block;
+	color: #aad8ff;
+	text-underline-offset: 6px;
+	text-decoration-thickness: 1px;
+}
+.login-action-confirm_admin_email p.admin-email__details a:hover {
+	color: #fff;
+	transition: .4s ease;
+}
+.login-action-confirm_admin_email p.admin-email__details:nth-of-type(2) strong {
+	color: #e10000 !important;
+}
+.login-action-confirm_admin_email .admin-email__actions-secondary a {
+	font-size: 16px !important;
+	font-weight: 500 !important;
+	color: #aad8ff;
+	text-decoration: underline !important;
+	text-underline-offset: 3px !important;
+	text-decoration-thickness: 1px !important;
+	transition: .4s ease;
+}
+.login-action-confirm_admin_email .admin-email__actions-secondary a:hover {
+	color: #fff;
+}
+a:focus, a:focus-visible {
+	box-shadow: none !important;
+	border: 0 !important;
+	outline: none !important;
+}
+
+.login form {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	padding: 0 4px;
+}
+
+.login label {
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: .3px;
+}
+
+.login input[type=text],
+.login input[type=password],
+.login input[type=email] {
+	margin-right: 0;
+	padding: 10px !important;
+	background: #f0f0f1;
+	border: 3px solid #dedede;
+	color: #000;
+	border-radius: 10px;
+	font-size: 20px;
+}
+
+.wp-core-ui .button-primary,
+.login-action-confirm_admin_email .admin-email__actions-primary a {
+	min-width: 150px;
+	background: #3582c4;
+	min-height: 40px !important;
+	line-height: 1 !important;
+	padding: 0 12px 2px !important;
+	font-size: 16px !important;
+	font-weight: 500 !important;
+	border: none !important;
+	border-radius: 10px !important;
+	transition: .4s ease;
+}
+.login-action-confirm_admin_email .admin-email__actions-primary a {
+	margin-right: 10px !important;
+	background: #666 !important;
+	color: #fff !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+.login-action-confirm_admin_email .admin-email__actions-primary a:hover {
+	background: #999 !important;
+}
+@media (max-width: 575px) {
+	.login-action-confirm_admin_email .admin-email__actions-primary a {
+		min-width: 129px;
+	}
+	.login-action-confirm_admin_email #correct-admin-email {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+.wp-core-ui .button-primary:hover {
+	background: #1d4ed8 !important;
+}
+.wp-core-ui .button-primary:focus,
+.wp-core-ui .button-primary:focus-visible {
+	box-shadow: none !important;
+	background: #1d4ed8 !important;
+	border: 0 !important;
+	outline: none !important;
+}
+.wp-core-ui .button-primary[disabled]:hover {
+	color: #fff !important;
+}
+
+.login .button.wp-hide-pw {
+	min-height: 50px;
+}
+.login .button.wp-hide-pw:focus,
+.login .button.wp-hide-pw:focus-visible {
+	box-shadow: none !important;
+	border: 0 !important;
+	outline: none !important;
+}
+
+.login #nav,
+.login #backtoblog {
+	margin: 10px 0;
+	padding: 0;
+}
+.login #nav a,
+.login #backtoblog a,
+.privacy-policy-link {
+	position: relative;
+	font-size: 16px;
+	font-weight: 500;
+	color: #aad8ff;
+	transition: .4s ease;
+	text-decoration: none;
+}
+.privacy-policy-link {
+	color: #fff;
+}
+.privacy-policy-link:hover {
+	color: #3582c4;
+}
+
+.login #nav a:hover,
+.login #nav a:focus,
+.login #backtoblog a:hover,
+.login #backtoblog a:focus {
+	color: #fff;
+}
+
+.login .indicator-hint,
+.login #reg_passmail {
+	color: #fff;
+	font-weight: 500;
+}
+
+.login #pass-strength-result {
+	margin: 2px 0 16px 0;
+	padding: 6px 5px 8px;
+	line-height: 1;
+	border-radius: 10px;
+	border-width: 3px;
+	color: #000;
+}
+
+.login .wp-generate-pw {
+	min-height: 40px !important;
+	line-height: 1 !important;
+	padding: 0 12px 2px !important;
+	font-weight: bold;
+	background: #3f9d2f;
+	color: #fff !important;
+	border: none;
+	border-radius: 10px !important;
+	transition: .4s ease;
+}
+
+.login .wp-generate-pw:hover {
+	background: #328c23 !important;
+}
+
+.login-footer {
+	text-align: center;
+	margin-top: 20px;
+	color: #91a7c6;
+	font-size: 13px;
+}
+
+.login .notice-error, .login .notice-info {
+	font-weight: 500;
+	color: #000;
+	border-left-color: #ff0003;
+	border-radius: 5px;
+}
+
+.login #wfls-prompt-overlay {
+	margin: 0 -40px;
+	padding: 0 40px;
+	background: linear-gradient(90deg, #05050a 0.000%, #05050a 7.692%, #090a0e calc(7.692% + 1px), #090a0e 15.385%, #0d0e12 calc(15.385% + 1px), #0d0e12 23.077%, #121316 calc(23.077% + 1px), #121316 30.769%, #16171a calc(30.769% + 1px), #16171a 38.462%, #1a1b1e calc(38.462% + 1px), #1a1b1e 46.154%, #1e1f22 calc(46.154% + 1px), #1e1f22 53.846%, #222326 calc(53.846% + 1px), #222326 61.538%, #26272a calc(61.538% + 1px), #26272a 69.231%, #292a2d calc(69.231% + 1px), #292a2d 76.923%, #2c2d30 calc(76.923% + 1px), #2c2d30 84.615%, #2e2f33 calc(84.615% + 1px), #2e2f33 92.308%, #303135 calc(92.308% + 1px) 100.000%);
+}
+@media (max-width: 575px) {
+	.login #wfls-prompt-overlay {
+		margin: 0 -15px;
+		padding: 0 15px;
+	}
+}

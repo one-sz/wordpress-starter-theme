@@ -1,0 +1,58 @@
+//==============================================
+// Mixins/Fluid types
+//==============================================
+@use "sass:math";
+
+@function strip-unit($value) { @return calc($value / ($value * 0 + 1px)); }
+
+@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value, $important: null) {
+	@each $property in $properties {
+		#{$property}: $min-value $important;
+	}
+	@media only screen and (min-width: $min-vw) {
+		@each $property in $properties {
+			#{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}) $important;
+		}
+	}
+	@media only screen and (min-width: $max-vw) {
+		@each $property in $properties {
+			#{$property}: $max-value $important;
+		}
+	}
+}
+
+//caniuse clamp() since 2019-2020
+@function round-dec($number, $digits: 2) {
+	$n: 1;
+	@for $i from 1 through $digits { $n: $n * 10; }
+	@return math.div(math.round($number * $n), $n);
+}
+@mixin fluid-clamp($properties, $min-vw, $max-vw, $min, $max, $important: null) {
+	$diff: $max - $min;
+	$vw-range: $max-vw - $min-vw;
+
+	$ratio: math.div($diff, $vw-range);
+	$slope: round-dec($ratio * 100);
+	$intercept: round-dec($min - $ratio * $min-vw);
+
+	// needed for negative values
+	$clamp-min: if($min < $max, $min, $max);
+	$clamp-max: if($min < $max, $max, $min);
+
+	@each $prop in $properties {
+		#{$prop}: clamp(
+			#{$clamp-min},
+			calc(#{$slope}vw + #{$intercept}),
+			#{$clamp-max}
+		) #{$important};
+	}
+}
+
+// calculate the header height when it is dynamic
+@function header-value($min-vw, $max-vw, $min, $max) {
+	$slope: math.div(($max - $min), ($max-vw - $min-vw)) * 100;
+	$intercept: $min - math.div($slope * $min-vw, 100);
+	$slope: round-dec($slope, 2);
+	$intercept: round-dec($intercept, 2);
+	@return clamp(#{$min}, #{$slope}vw + #{$intercept}, #{$max});
+}

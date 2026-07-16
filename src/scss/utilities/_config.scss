@@ -1,0 +1,70 @@
+// ===================================================================
+// Grid system
+// ===================================================================
+// [B] - Bootstrap usage
+$grid-gutter: 30px;
+$grid-columns: 12;
+
+$container-xs: 100%;
+$container-sm: 540px;
+$container-md: 720px;
+$container-lg: 960px;
+$container-xl: 1140px;
+$container-fhd: 1920px;
+
+// ===================================================================
+// BREAKPOINTS - [B] - Theme based on bootstrap grid
+// ===================================================================
+// [B] mobile first
+$screen-xs-min: 320px;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+$screen-xxl-min: 1440px;
+
+// List of [B]
+// $breakpoints - {map}
+$breakpoints: (
+xs: $screen-xs-min,
+sm: $screen-sm-min,
+md: $screen-md-min,
+lg: $screen-lg-min,
+xl: $screen-xl-min,
+xxl: $screen-xxl-min,
+/* Custom breakpoints */
+phone-extra-small: 320px,
+phone-small: 360px,
+iphone: 375px,
+phone: 400px,
+phone-wide: 480px,
+tablet: 768px,
+tablet-wide: 1024px,
+laptop: 1170px,
+laptop-wide: 1366px,
+desktop: 1440px,
+desktop-wide: 1600px,
+desktop-fhd: 1920px,
+desktop-2k: 2048px,
+desktop-uw-fhd: 2560px,
+desktop-qhd: 3200px,
+desktop-4k: 3840px
+);
+
+// ===================================================================
+// z-index
+// ===================================================================
+$zindex: (
+null: 0,
+back: -1000,
+default: 1,
+base: 1000,
+footer: 1100,
+header: 1000,
+sidebar: 900,
+drop: 1300,
+overlay: 1400,
+modal: 1500,
+drawer: 1600
+);
+

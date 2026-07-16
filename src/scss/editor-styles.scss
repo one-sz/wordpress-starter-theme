@@ -1,0 +1,112 @@
+
+// ==========================================================================
+// $Vendor
+// ==========================================================================
+@import 'vendor/index';
+
+// ==========================================================================
+// $Utilities
+// ==========================================================================
+@import 'utilities/index';
+
+// ==========================================================================
+// $Mixins
+// ==========================================================================
+@import 'mixins/index';
+
+// ==========================================================================
+// $Components
+// ==========================================================================
+@import 'components/index';
+
+@import 'base/fonts';
+//@import 'base/blocks';
+@import 'gutenberg/index';
+
+// ==========================================================================
+// $Blocks
+// ==========================================================================
+@import 'blocks/index';
+
+* {
+	font-family: 'Segoe UI', 'tinymce', -apple-system, dashicons, BlinkMacSystemFont, Roboto,Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+}
+
+.acf-block-component {
+	margin: 24px 0;
+	.acf-field {
+		min-height: auto !important;
+	}
+}
+
+.is-root-container.block-editor-block-list__layout {
+	padding: 0 7px;
+	.acf-block-body {
+		&:nth-child(odd) {
+			>.section {
+				background-color:#36383c;
+			}
+		}
+		&:nth-child(even) {
+			>.section {
+				background-color:#4d5257;
+			}
+		}
+	}
+}
+
+.acf-block-preview {
+	padding: .1rem 0 .3rem;
+
+	.preview-title {
+		@include fluid-clamp((font-size), 992px, 1440px, 20px, 34px);
+		font-weight: 600 !important;
+		line-height: 1 !important;
+		margin: 0 !important;
+		color: #fafafa !important;
+		text-align: center !important;
+	}
+	>.section {
+		border-radius: 3px;
+		text-align: center;
+		cursor: pointer;
+		transition: .2s linear;
+
+		&:hover {
+			transform: scale(1.013);
+		}
+
+		a {
+			text-decoration: none !important;
+		}
+
+		/* &.vertical-space {
+				border: 4px solid #6e8a9f;
+		} */
+
+		.click-to-edit {
+			font-size: 12px;
+			font-weight: 500;
+			color:#fafafa;
+			letter-spacing: .5px;
+			>div {
+				padding-top: 2px;
+				font-size: 15px;
+				letter-spacing: 0;
+				color: #78bd00;
+			}
+		}
+	}
+}
+
+h1.editor-post-title {
+	padding: 0 30px;
+}
+
+.is-root-container.block-editor-block-list__layout {
+	padding: 20px 30px;
+}
+
+.is-focus-mode .block-editor-block-list__block:not(.has-child-selected) {
+	opacity: 1;
+}

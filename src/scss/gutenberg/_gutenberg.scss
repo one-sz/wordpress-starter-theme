@@ -1,0 +1,47 @@
+
+/* Post title width */
+.editor-post-title__block.wp-block {
+	max-width: 100%;
+    @include mq('sm') {
+        max-width: 540px;
+    }
+    @include mq('lg') {
+        max-width: 960px;
+    }
+    @include mq('xl') {
+        max-width: 1140px;
+    }
+}
+
+/* Main column width */
+.wp-block {
+    max-width: 100%;
+	/* Full column width */
+    &[data-align="full"],
+    &[data-align="wide"] {
+		max-width: 100%;
+	}
+}
+
+// Undo blockquote styles
+.wp-block-quote:not(.is-large):not(.is-style-large) {
+	border-left: 0;
+	padding-left: 0;
+}
+
+// Fix space between image and caption
+.wp-block-image {
+	line-height: 0;
+}
+
+// Full width button
+.wp-block-button.is-style-full,
+.wp-block-button.is-style-full .block-editor-rich-text,
+div[data-type="core/button"] div[data-block] {
+	display: block;
+}
+
+// Separator
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+	max-width: 100%;
+}

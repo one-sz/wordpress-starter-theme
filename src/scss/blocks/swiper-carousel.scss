@@ -1,0 +1,36 @@
+@import '../utilities/index';
+@import '../vendor/_swiper.scss';
+
+.amenities-carousel {
+
+		.swiper {
+		&-pagination {
+			&-bullets {
+				bottom: -34px;
+				@include mq('md') {
+					bottom: -42px;
+				}
+			}
+			&-bullet {
+				width: 14px;
+				height: 14px;
+				position: relative;
+				background: transparent;
+				border: 1px solid red;
+				&-active {
+					&:before {
+						content: '';
+						position: absolute;
+						top: 1px;
+						bottom: 1px;
+						left: 1px;
+						right: 1px;
+						background-color: red;
+						border-radius: 100%;
+					}
+				}
+			}
+		}
+	}
+
+}

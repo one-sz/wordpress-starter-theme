@@ -1,0 +1,13 @@
+@import '../utilities/index';
+
+.full-image {
+	@include mq('lg') {
+		overflow: hidden;
+	}
+
+	picture {
+		max-width: unset;
+		object-fit: cover;
+	}
+
+}

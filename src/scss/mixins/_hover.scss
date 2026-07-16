@@ -1,0 +1,16 @@
+//==============================================
+// Mixins/Hover
+//==============================================
+
+// Hovers
+// Create pseduo-classes for `:hover`, `:active`, and `:focus`.
+
+@mixin hover {
+    &:hover,
+    &:active,
+    &:focus {
+        @include mq('lg') {
+            @content;
+        }
+    }
+}

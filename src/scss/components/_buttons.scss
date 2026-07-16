@@ -1,0 +1,20 @@
+//==============================================
+// Component/Buttons
+//==============================================
+
+/* .btn {
+} */
+
+.frontend {
+	input,
+	textarea,
+	button {
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	button {
+		cursor: pointer;
+	}
+}

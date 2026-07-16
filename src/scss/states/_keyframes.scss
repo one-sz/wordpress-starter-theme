@@ -1,0 +1,58 @@
+//==============================================
+// Module/Keyframes
+//==============================================
+
+// Animate your modules or other elements.
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes move-top-bottom {
+	0% {
+		transform: translateY(-100%);
+	}
+	25% {
+		transform: translateY(0%);
+	}
+	75% {
+		transform: translateY(0%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {
+		transform: translateY(0);
+	}
+	40% {
+        transform: translateY(-30px);
+  }
+	60% {
+        transform: translateY(-15px);
+  }
+}

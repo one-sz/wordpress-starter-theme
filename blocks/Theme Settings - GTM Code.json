@@ -1,0 +1,145 @@
+[
+    {
+        "key": "group_6627341ea8d4f",
+        "title": "Global Settings",
+        "fields": [
+            {
+                "key": "field_69a878d2e467e",
+                "label": "Cookiebot Service",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 1,
+                "selected": 0
+            },
+            {
+                "key": "field_69a878d0e467d",
+                "label": "Cookiebot Code",
+                "name": "cookiebot_code",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "INFO: The Cookiebot service code can be added here, it may impact the website's loading speed, but it is required to ensure compliance with cookie regulations.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": 3,
+                "placeholder": "",
+                "new_lines": ""
+            },
+            {
+                "key": "field_6627341f22d87",
+                "label": "Google Tag Manager",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_6627347d22d88",
+                "label": "GTM ID",
+                "name": "gtm_id",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "IMPORTANT: Write exclusively the GTM ID (GTM-XXXXX) to work and for a better site speed.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": 20,
+                "allow_in_bindings": 1,
+                "rows": 2,
+                "placeholder": "GTM-XXXXXXX",
+                "new_lines": ""
+            },
+            {
+                "key": "field_6627349522d89",
+                "label": "GTM Body Code",
+                "name": "gtm_body_code",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "IMPORTANT: The &lt;noscript&gt; part from GTM code here need to be added.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "rows": 2,
+                "placeholder": "",
+                "new_lines": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "theme-settings"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "ui_options_page_6627344d89370",
+        "title": "Theme Settings",
+        "active": true,
+        "menu_order": 0,
+        "page_title": "Theme Settings",
+        "menu_slug": "theme-settings",
+        "parent_slug": "none",
+        "advanced_configuration": 1,
+        "icon_url": "",
+        "menu_title": "",
+        "position": 90,
+        "redirect": 0,
+        "description": "",
+        "update_button": "Update",
+        "updated_message": "Options Updated",
+        "capability": "edit_posts",
+        "data_storage": "options",
+        "post_id": "",
+        "autoload": 0
+    }
+]

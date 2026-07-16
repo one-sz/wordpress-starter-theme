@@ -1,0 +1,3 @@
+<?php
+?>
+<svg xmlns="http://www.w3.org/2000/svg" width="43" height="42" viewBox="-16506.999 620.499 43 42"><g fill-rule="evenodd"><ellipse cx="21.5" cy="21" fill="#fff" rx="21.5" ry="21" transform="translate(-16506.999 620.499)"/><path fill="#007eaf" d="M-16478.553 630.828h3.608l-7.883 9.01 9.275 12.26h-7.262l-5.687-7.436-6.51 7.436h-3.61l8.433-9.638-8.897-11.631h7.446l5.14 6.797zm-1.266 19.111h2l-12.908-17.065h-2.145z"/></g></svg>

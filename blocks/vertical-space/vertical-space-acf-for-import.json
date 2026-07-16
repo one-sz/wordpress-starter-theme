@@ -1,0 +1,71 @@
+[
+    {
+        "key": "group_63a42dfd612d2",
+        "title": "Vertical Space",
+        "fields": [
+            {
+                "key": "field_63a42dfe38958",
+                "label": "Desktop",
+                "name": "desktop",
+                "aria-label": "",
+                "type": "range",
+                "instructions": "Info: The space between the maximum (desktop) and minimum (mobile) values is defined in pixels and dynamically adjusts to ensure a smooth and consistent experience across all screen sizes.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 0,
+                "min": 0,
+                "max": 1000,
+                "allow_in_bindings": 1,
+                "step": 5,
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_63a42e8a3895a",
+                "label": "Mobile",
+                "name": "mobile",
+                "aria-label": "",
+                "type": "range",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 0,
+                "min": 0,
+                "max": 1000,
+                "allow_in_bindings": 1,
+                "step": 5,
+                "prepend": "",
+                "append": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/vertical-space"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": ""
+    }
+]

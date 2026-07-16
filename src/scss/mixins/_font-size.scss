@@ -1,0 +1,26 @@
+//==============================================
+// Mixins/Font Size
+//==============================================
+
+@mixin font-size($font-mobile,$bp: '',$vals: '') {
+    @if ( length($bp) > 0 & length($vals) > 0 ) {
+        @include fluid-type('font-size', 360px, 576px, $font-mobile, calc(($font-mobile * 576 / 360)));
+        @include mq('sm') {
+            font-size: $font-mobile;
+        }
+        @if ( length($bp) == length($vals) ) {
+            @for $i from 1 through length($bp) {
+                @if ( map_has_key($breakpoints, nth($bp,$i)) & map_has_key($breakpoints, nth($bp,$i)) ) {
+                    @include mq(nth($bp,$i)) {
+                        font-size: nth($vals,$i);
+                    }
+                }
+            }
+        }
+    } else {
+        @include fluid-type('font-size', 360px, 576px, $font-mobile, calc(($font-mobile * 576 / 360)));
+        @include mq('sm') {
+            font-size: $font-mobile;
+        }
+    }
+}

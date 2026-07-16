@@ -1,0 +1,119 @@
+// ===============================
+// $Base/General
+// ===============================
+
+html {
+	margin: 0;
+	scrollbar-gutter: stable;
+	scroll-behavior: inherit !important;
+	&.noscroll {
+		overflow: hidden !important;
+	}
+}
+
+body {
+	width: 100%;
+	padding: 0;
+	position: relative;
+	line-height: 1.2;
+	font-family: $font-family-base;
+	font-weight: normal;
+	font-size: 14px;
+	color: $color-primary;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: subpixel-antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0;
+
+	* {
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+		-webkit-tap-highlight-color: transparent;
+		border-radius: 0;
+		&::-webkit-details-marker,
+		&::marker {
+			display: none !important;
+			content: none !important;
+		}
+	}
+
+	*:focus-visible {
+		transition: .15s ease !important;
+		outline: #111 solid 2px;
+		border-radius: 3px;
+	}
+
+	a:not(.ab-item) {
+		color: $color-primary;
+		text-decoration: none;
+		@include general-transition;
+
+		@media (hover: hover) {//only if device have support for Hover (mouse must be detected)
+			&:hover {
+				color: $color-secondary;
+				text-decoration: none;
+			}
+		}
+	}
+
+	&.noscroll {
+		overflow: hidden !important;
+	}
+
+	&.admin-bar {
+		@include mq('laptop') {
+			margin-top: 32px;
+		}
+	}
+
+	#wpadminbar {
+		display: none;
+		@include mq('laptop') {
+			display: block;
+		}
+		.menupop {
+			.ab-sub-wrapper {
+				top: 30px;
+			}
+		}
+	}
+
+	.container {
+		margin: 0 auto;
+		@include mq('sm',max) { padding-right: 20px; padding-left: 20px; }
+		@include mq('sm') { max-width: 1200px; width: 94%; }
+	}
+}
+
+.sr-only {
+	position: absolute;
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+//Custom scroll bar on Chromium and with mouse
+@media (hover: hover) and (pointer: fine) {
+	* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.3) transparent; }
+	::-webkit-scrollbar { -webkit-appearance: none; width: 6px;}
+	::-webkit-scrollbar-track { background: transparent; }
+	::-webkit-scrollbar-thumb { background: rgba(0,0,0,.3); }
+	::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.35); }
+}
+
+
+//Add transition delay to elements
+//@for $i from 2 through 20 {
+	//&:nth-of-type(#{$i}) {
+		//transition-delay: #{($i - 1) * .3s};
+	//}
+//}
+
+//style="transition-delay:<?= $i*0.1; ?>s"

@@ -1,0 +1,12 @@
+{
+	"name": "acf/full-image",
+	"title": "Full Image",
+	"description": "Full Image block.",
+	"category": "custom",
+	"icon": "format-aside",
+	"keywords": ["full image", "custom"],
+	"acf": {
+		"mode": "auto",
+		"renderTemplate": "block.php"
+	}
+}

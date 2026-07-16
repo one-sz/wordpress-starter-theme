@@ -1,0 +1,32 @@
+//==============================================
+// Utilites/Variables
+//==============================================
+
+// Links
+// =============================================
+$link-decoration: none;
+$link-hover-decoration: none;
+
+// Animation
+// =============================================
+$timeline-base: .4s;
+$timeline-fast: .2s;
+$timeline-slow: .8s;
+$timeline-extra-slow: 1.4s;
+$timeline-scale: 80s;
+
+// Cursor controls
+// =============================================
+$cursor-active: pointer;
+$cursor-disabled: not-allowed;
+$cursor-resize: col-resize;
+
+// Padding/margin
+// =============================================
+$margin: 30px;
+$margin-md: 30px;
+$margin-lg: 45px;
+$margin-xxl: 60px;
+$margin-desktop-fhd: 75px;
+
+$bodyClass: '.editor-styles-wrapper .block-editor-block-list__layout,body.frontend';

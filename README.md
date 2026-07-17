@@ -54,7 +54,7 @@ A modern, performance-first WordPress starter theme built with **Vite**. It is d
 
 ## Getting Started
 
-1. Copy/clone the theme into `wp-content/themes/`.
+1. Copy/clone the theme into `wp-content/themes/theme-name/`.
 2. Install front-end dependencies:
 
    ```bash

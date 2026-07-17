@@ -10,7 +10,7 @@
 
 # WordPress SZ Starter Theme
 
-A modern, performance-first WordPress starter theme built with **Vite**. It is designed from the ground up to score well on Core Web Vitals, works out of the box with **ACF (Advanced Custom Fields)**, and includes ready-to-uncomment integration points for **Yoast SEO** and **Gravity Forms**.
+A modern, performance-first WordPress starter theme powered with **Vite**. It is designed from the ground up to score well on Core Web Vitals, works out of the box with **ACF (Advanced Custom Fields)**, and includes ready-to-uncomment integration points for **Yoast SEO** and **Gravity Forms**.
 
 ## Table of Contents
 

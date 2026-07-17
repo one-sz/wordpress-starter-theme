@@ -30,7 +30,7 @@ A modern, performance-first WordPress starter theme built with **Vite**. It is d
 - [Yoast SEO Notes](#yoast-seo-notes)
 - [Gravity Forms Notes](#gravity-forms-notes)
 - [Theme Customizer](#theme-customizer)
-- [Custom Admin Login](#custom-admin-login)
+- [Personalized Style for Admin Login Page](#personalized-style-for-admin-login-page)
 - [License](#license)
 
 ## Features
@@ -252,9 +252,11 @@ Uncomment and adapt whichever snippets a given project needs.
 - **Site Logo** (`inc/customizer/site-logo.php`) — powers `html_site_logo()` in `inc/helper-functions.php`.
 - **Social Links** (`inc/customizer/social-links.php`) — powers the bundled `Custom_Social_Links` widget and social icon template parts (`template-parts/icons/*.php`: Facebook, Instagram, LinkedIn, Twitter).
 
-## Custom Admin Login
+## Personalized Style for Admin Login Page
 
 `my-admin/login.php` (loaded via `locate_template()` in `functions.php`) replaces the default `wp-login.php` branding with theme-specific styling (`login.css`) and behavior (`login.js`), including a themed favicon for wp-admin.
+
+If you prefer the classic login, you can comment the line in functions.php to bring back the classic style for login page.
 
 ## License
 

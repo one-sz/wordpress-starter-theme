@@ -12,9 +12,14 @@
 
 	 <main id="primary" class="site-main container">
 
-		 <?php while ( have_posts() ) {
-			the_post(); the_content();
-			 if (the_content() === null) { echo '<h1 class="d-flex align-items-center justify-content-center text-center" style="height: 50vh;">No template built.</h1>'; }
+		<?php while ( have_posts() ) {
+				the_post();
+				$content = get_the_content();
+				if ( ! empty( trim( $content ) ) ) {
+					the_content();
+				} else {
+					echo '<h1 class="d-flex align-items-center justify-content-center text-center" style="height: 50vh;">No template built.</h1>';
+				}
 		} ?>
 
 	 </main><!-- #main -->

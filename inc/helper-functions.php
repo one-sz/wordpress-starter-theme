@@ -127,6 +127,7 @@ function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render
 		'loading' => 'lazy',
 		'fetchpriority' => 'low',
 		'decoding' => 'async',
+		'breakpoint' => 768, // desktop începe de aici
 	];
 	$options = array_merge($defaults, $args);
 
@@ -155,13 +156,16 @@ function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render
 	// Prepare HTML sources in PHP to keep the template clean
 	$sources_html = '';
 
+	$mobile_media = '(max-width:' . ($options['breakpoint'] - 1) . 'px)';
+	$desktop_media = '(min-width:' . $options['breakpoint'] . 'px)';
+
 	if ($mobile) {
 		// Scenario A: Both mobile and desktop images exist
-		if ($mobile->has_webp) { $sources_html .= '<source media="(max-width:767px)" srcset="' . esc_attr($mobile->wss) . '" type="image/webp" sizes="100vw">'; }
-		if ($mobile->ss) { $sources_html .= '<source media="(max-width:767px)" srcset="' . esc_attr($mobile->ss) . '" sizes="100vw">'; }
+		if ($mobile->has_webp) { $sources_html .= '<source media="' . esc_attr($mobile_media) . '" srcset="' . esc_attr($mobile->wss) . '" type="image/webp" sizes="100vw">'; }
+		if ($mobile->ss) { $sources_html .= '<source media="' . esc_attr($mobile_media) . '" srcset="' . esc_attr($mobile->ss) . '" sizes="100vw">'; }
 
-		if ($desktop->has_webp) { $sources_html .= '<source media="(min-width:768px)" srcset="' . esc_attr($desktop->wss) . '" type="image/webp" sizes="100vw">'; }
-		if ($desktop->ss) { $sources_html .= '<source media="(min-width:768px)" srcset="' . esc_attr($desktop->ss) . '" sizes="100vw">'; }
+		if ($desktop->has_webp) { $sources_html .= '<source media="' . esc_attr($desktop_media) . '" srcset="' . esc_attr($desktop->wss) . '" type="image/webp" sizes="100vw">'; }
+		if ($desktop->ss) { $sources_html .= '<source media="' . esc_attr($desktop_media) . '" srcset="' . esc_attr($desktop->ss) . '" sizes="100vw">'; }
 	} else {
 		// Scenario B: Only desktop image exists (Fallback for all screen sizes)
 		// We drop the media attribute so these apply to ALL screen widths, forcing WebP first

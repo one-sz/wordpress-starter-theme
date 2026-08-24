@@ -12,7 +12,7 @@
 	$fields = get_fields();
 ?>
 
-<div class="section <?= esc_attr( $class_name ); ?> inview-animate--fade">
+<div class="section <?= esc_attr( $class_name ); ?> w-100 inview-animate--fade">
 	<div class="container">
 
 		<?php rrp( $fields['desktop_image'] ?? null, $fields['mobile_image'] ?? null, [ 'picture_class' => 'bg', 'img_class' => 'cover', 'loading' => 'lazy', 'fetchpriority' => 'low', ] ); //$fields['desktop_image'] can be replaced by get_post_thumbnail_id($post->ID) if you need featured image of a post/page ?>

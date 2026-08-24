@@ -7,6 +7,8 @@
 	"keywords": ["vertical space", "custom"],
 	"acf": {
 		"mode": "auto",
-		"renderTemplate": "block.php"
+		"renderTemplate": "block.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true
 	}
 }

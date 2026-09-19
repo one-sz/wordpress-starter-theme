@@ -1,5 +1,6 @@
 //const $ = window.jQuery; // it is defined global in vite not need anymore
-import Headroom from 'headroom.js';
+//import Headroom from 'headroom.js'; //original version based on jQuery, but not so fast
+import Headroom from './vendor/headroom.js'; //vanilla ES6 built, optimized for performance
 
 $(() => {
 	inviewAnimate();
@@ -8,10 +9,8 @@ $(() => {
 })
 
 const initHeadroom = () => {
-	const $h = $('.site-header'), h = $h.outerHeight();
-	//document.documentElement.style.setProperty('--hh', h + 'px'); //get dynamic header height and set it into the css variable var(--hh), but creates layout shift!!!
-	$h.each((_, el) => new Headroom(el, { offset: h }).init());
-} //$(window).on('resize', initHeadroom);
+	document.querySelectorAll('.site-header').forEach( header => { new Headroom(header, { offset: header.offsetHeight, }).init(); } );
+};
 
 const inviewAnimate = () => {
 	const ivElements = document.querySelectorAll(`
@@ -159,3 +158,7 @@ const headerMenu = () => {
 	}
 
 }
+
+//Used for import/require OLD JS library if you get Uncaught TypeError: $(...).js-library-name is not a function
+/* window.$ = window.jQuery = require('jquery');
+require('js-library-name'); */

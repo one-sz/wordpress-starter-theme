@@ -10,7 +10,7 @@ $(() => {
 
 const initHeadroom = () => {
 	document.querySelectorAll('.site-header').forEach( header => { new Headroom(header, { offset: header.offsetHeight, }).init(); } );
-};
+}
 
 const inviewAnimate = () => {
 	const ivElements = document.querySelectorAll(`
@@ -56,55 +56,103 @@ const inviewAnimate = () => {
 const headerMenu = () => {
 	const header = $('.site-header'),
 			headerMenu = $('.nav-wrap'),
+			navWrapEl = headerMenu.get(0),
 			headerBurger = $('.nav-trigger'),
 			$body = $('body'),
 			$htmlBody = $('html, body'),
-			supportsScrollbarGutter = CSS.supports('scrollbar-gutter: stable'),
-			scrollbarWidth = supportsScrollbarGutter ? 0 : window.innerWidth - document.documentElement.clientWidth;
+			$menuItems = $('.menu-item-has-children');
 
-	const toggleScrollbarCompensation = (isOpen) => {
-		if (!scrollbarWidth) return;
-		const padding = isOpen ? `${scrollbarWidth}px` : '';
-		header.add($body).css('padding-right', padding);
-	};
+	let startX = 0;
+	let startY = 0;
+	let currentX = 0;
+	let isSwiping = false;
+	let isHorizontalSwipe = null;
 
-	const closeMenu = () => {
-		if (!header.hasClass('nav-active')) return;
-		$htmlBody.removeClass('noscroll');
-		toggleScrollbarCompensation(false);
-		headerBurger.removeClass('active').attr('aria-expanded', 'false');
-		header.removeClass('nav-active');
-		headerMenu.stop(true, true).fadeOut(300).removeClass('menu-active');
-	};
+	if (!navWrapEl) return;
 
-	headerBurger.on('click', function () {
-		const isOpen = $body.toggleClass('noscroll').hasClass('noscroll');
-		toggleScrollbarCompensation(isOpen);
-		headerBurger.toggleClass('active');
-		header.toggleClass('nav-active');
-		headerBurger.attr('aria-expanded', String(isOpen));
-		if (isOpen) {
-			headerMenu.stop(true, true).fadeIn(300).addClass('menu-active');
-		} else {
-			headerMenu.stop(true, true).fadeOut(300).removeClass('menu-active');
+	// Safe Popover trigger handlers
+	const showNavPopover = () => { if (typeof navWrapEl.showPopover === 'function' && !navWrapEl.matches(':popover-open')) navWrapEl.showPopover(); };
+
+	const hideNavPopover = () => { if (typeof navWrapEl.hidePopover === 'function' && navWrapEl.matches(':popover-open')) navWrapEl.hidePopover(); };
+
+	// Listen to Popover native toggle state
+	navWrapEl.addEventListener('toggle', (e) => {
+		const isOpen = e.newState === 'open';
+		headerBurger.toggleClass('active', isOpen).attr('aria-expanded', String(isOpen));
+		header.toggleClass('nav-active', isOpen);
+		$body.toggleClass('noscroll', isOpen);
+		if (!isOpen) {
+			navWrapEl.style.transform = '';
+			headerMenu.removeClass('is-dragging');
 		}
 	});
 
-	headerMenu.on('click', 'a:not([href^="#"])', closeMenu);
+	// Close Popover drawer when clicking navigation links
+	headerMenu.on('click', 'a:not([href^="#"])', hideNavPopover);
 
-	window.addEventListener('pageshow', (e) => {
-		if (e.persisted) closeMenu();
-	});
+	window.addEventListener('pageshow', (e) => { if (e.persisted) hideNavPopover(); });
+
+	// Touch & Swipe gestures logic (Hardware Accelerated via translate3d)
+	const handleTouchStart = (e) => {
+		if (window.innerWidth >= 992) return;
+		const touch = e.touches[0];
+		startX = currentX = touch.clientX;
+		startY = touch.clientY;
+		isHorizontalSwipe = null;
+		const isMenuOpen = navWrapEl.matches(':popover-open'),
+				isRightEdge = startX >= window.innerWidth - 50;//px sliding to activate drawer from right side
+		isSwiping = isMenuOpen || isRightEdge;
+	};
+
+	const handleTouchMove = (e) => {
+		if (!isSwiping) return;
+		const touch = e.touches[0],
+				diffX = touch.clientX - startX,
+				diffY = touch.clientY - startY;
+		if (isHorizontalSwipe === null) { isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY); }
+		if (!isHorizontalSwipe) return;
+		currentX = touch.clientX;
+		const isMenuOpen = navWrapEl.matches(':popover-open');
+		if (isMenuOpen) {
+			if (diffX > 0) { headerMenu.addClass('is-dragging'); navWrapEl.style.transform = `translate3d(${diffX}px, 0, 0)`; }
+		} else if (diffX < 0) {
+			showNavPopover();
+			headerMenu.addClass('is-dragging');
+			const drawerWidth = navWrapEl.offsetWidth || window.innerWidth * 0.95;
+			const currentTranslateX = Math.max(0, drawerWidth + diffX);
+			navWrapEl.style.transform = `translate3d(${currentTranslateX}px, 0, 0)`;
+		}
+	};
+
+	const handleTouchEnd = () => {
+		if (!isSwiping) return;
+		isSwiping = false;
+		headerMenu.removeClass('is-dragging');
+		const diffX = currentX - startX,
+				isMenuOpen = navWrapEl.matches(':popover-open'),
+				threshold = 20;//how much to swipe to close the menu
+		if (isMenuOpen) {
+			if (diffX > threshold) { hideNavPopover(); } else { navWrapEl.style.transform = ''; }
+		} else {
+			if (diffX < -threshold) { navWrapEl.style.transform = ''; } else { hideNavPopover(); }
+		}
+	};
+
+	document.addEventListener('touchstart', handleTouchStart, { passive: true });
+	document.addEventListener('touchmove', handleTouchMove, { passive: true });
+	document.addEventListener('touchend', handleTouchEnd, { passive: true });
+	document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
 	const smoothScrollTo = ($target, offset = 0) => {
-		if (!$target || !$target.length) return;
-		const headerHeight = $('.site-header').outerHeight() || 0,
-				 targetTop = $target.offset().top - headerHeight - offset;
-		$htmlBody.stop(true).animate({ scrollTop: targetTop },500);
+		if (!$target?.length) return;
+		const headerHeight = header.outerHeight() || 0,
+				targetTop = $target.offset().top - headerHeight - offset;
+		$htmlBody.stop(true).animate({ scrollTop: targetTop }, 500);
 	};
 
 	// Smooth scroll to hash on page load
 	const { hash } = window.location;
+
 	if (hash && hash.length > 1) {
 		const $target = $(hash);
 		if ($target.length) {
@@ -120,39 +168,42 @@ const headerMenu = () => {
 	}
 
 	// Prevent default on header anchor links
-	$('.site-header').on('click', 'a[href="#"]', (e) => e.preventDefault());
+	header.on('click', 'a[href="#"]', (e) => e.preventDefault());
 
-	// Disable the click in MAIN over the "#" links and if the link has associated and ID will scroll to that ID if the ID exist
-	$('.site-main').on('click', '.section a[href^="#"]', function (e) {
+	// Disable click in MAIN over "#" links with smooth scroll
+	$('.site-main').on('click', '.section a[href^="#"]', function(e) {
 		e.preventDefault();
-		const targetId = this.hash; if (!targetId || targetId === '#') return;
-		const $target = $(targetId); if (!$target.length) return;
+		const targetId = this.hash;
+		if (!targetId || targetId === '#') return;
+		const $target = $(targetId);
+		if (!$target.length) return;
 		smoothScrollTo($target, 10);
 	});
 
-	//Add class 'open' on menu-item with children on hover or click
+	// Submenu handling
 	const hasHover = window.matchMedia('(hover: hover)').matches;
+
 	if (hasHover) {
-		$('.menu-item-has-children')
+		//Mouse
+		$menuItems
 			.on('mouseenter', function() {
-				$(this).addClass('open');
-				$(this).children('a').attr('aria-expanded', 'true');
+				$(this).addClass('open').children('a').attr('aria-expanded', 'true');
 			})
 			.on('mouseleave', function() {
-				$(this).removeClass('open');
-				$(this).children('a').attr('aria-expanded', 'false');
+				$(this).removeClass('open').children('a').attr('aria-expanded', 'false');
 			});
 	} else {
-		$('.menu-item-has-children > a').on('click', function() {
-			const $parent = $(this).parent();
-			$('.menu-item-has-children').not($parent).removeClass('open');
-			$(this).attr('aria-expanded', $parent.hasClass('open') ? 'true' : 'false');
-			$parent .toggleClass('open');
+		//Touch
+		$menuItems.children('a').on('click', function() {
+			const $parent = $(this).parent(),
+					isOpen = !$parent.hasClass('open');
+			$menuItems.not($parent).removeClass('open').children('a').attr('aria-expanded', 'false');
+			$parent.toggleClass('open', isOpen);
+			$(this).attr('aria-expanded', String(isOpen));
 		});
-
 		$body.on('click', function(e) {
-			if(!$(e.target).closest('.menu-item-has-children').length) {
-				$('.menu-item-has-children').removeClass('open');
+			if (!$(e.target).closest('.menu-item-has-children').length) {
+				$menuItems.removeClass('open').children('a').attr('aria-expanded', 'false');
 			}
 		});
 	}

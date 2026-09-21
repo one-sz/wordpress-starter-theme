@@ -7,7 +7,7 @@
 			</div>
 
 			<div class="nav-trigger-wrap d-lg-none">
-				<button href="#" class="nav-trigger d-flex flex-column justify-content-between" type="button" aria-label="Open Menu" aria-controls="nav-wrap" aria-expanded="false">
+				<button class="nav-trigger d-flex flex-column justify-content-between" type="button" aria-label="Open Menu" aria-label="Open Menu" aria-controls="nav-wrap" aria-expanded="false" popovertarget="nav-wrap">
 					<span></span>
 					<span></span>
 					<span></span>
@@ -15,8 +15,8 @@
 				</button>
 			</div>
 
-			<nav class="nav-wrap" id="nav-wrap" aria-label="Main navigation">
-				<?php wp_nav_menu(['theme_location' => 'primary', 'menu_id' => 'main-menu',]); ?>
+			<nav class="nav-wrap" id="nav-wrap" popover="auto" aria-label="Main navigation">
+				<?php wp_nav_menu(['theme_location' => 'primary', 'menu_id' => 'main-menu']); ?>
 			</nav>
 
 		</div>

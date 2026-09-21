@@ -1,12 +1,10 @@
-//===============================
-// Layout/Header
-//===============================
+$top-offset: 74px;
 
 .site-header {
 	width: 100%;
 	padding: 12px 0;
 	position: fixed;
-	transform: translateY(0);
+	transform: translate3d(0, 0, 0);
 	z-index: 15;
 	transition: .5s ease;
 	background-color: rgba(0,0,0,.55);
@@ -18,23 +16,23 @@
 			width: 200px;
 			height: 60px;
 		}
-		a {
-			img {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-				object-position: left center;
-			}
+		a img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			object-position: left center;
 		}
 	}
 
-
 	&.headroom {
 		&--unpinned {
-			transform: translateY(-100%);
+			transform: translate3d(0, -100%, 0);
+			&.nav-active {
+				transform: translate3d(0, 0, 0);
+			}
 		}
 		&--pinned {
-			transform: translateY(0);
+			transform: translate3d(0, 0, 0);
 		}
 	}
 
@@ -44,6 +42,8 @@
 		margin-left: auto;
 		position: relative;
 		z-index: 3;
+		background: transparent;
+		border: none;
 
 		span {
 			position: absolute;
@@ -53,53 +53,88 @@
 			background: $red;
 			transform-origin: center;
 			@include general-transition;
-			&:nth-child(1) {
-				top: 0;
-			}
-			&:nth-child(2) {
-				top: 50%;
-				transform: translateY(-50%);
-			}
-			&:nth-child(3) {
-				bottom: 0;
-			}
+			&:nth-child(1) { top: 0; }
+			&:nth-child(2) { top: 50%; transform: translate3d(0, -50%, 0); }
+			&:nth-child(3) { bottom: 0; }
 		}
 
 		&.active {
 			span {
 				border-radius: 5px;
-				&:nth-child(1) {
-					top: 50%;
-					transform: translateY(-50%) rotate(45deg);
-				}
-				&:nth-child(2) {
-					opacity: 0;
-				}
-				&:nth-child(3) {
-					bottom: auto;
-					top: 50%;
-					transform: translateY(-50%) rotate(-45deg);
-				}
+				&:nth-child(1) { top: 50%; transform: translate3d(0, -50%, 0) rotate(45deg); }
+				&:nth-child(2) { opacity: 0; }
+				&:nth-child(3) { bottom: auto; top: 50%; transform: translate3d(0, -50%, 0) rotate(-45deg); }
 			}
 		}
 	}
 
-
+	/* Native Popover Drawer Styles (Modern Web Guidance) */
 	.nav-wrap {
-		@include mq('lg') { display: block; width: calc(100% - 348px); }
-		@include mq('lg', max) {
-			width: 100%;
-			height: calc(var(--vh, 1vh) * 100);
-			margin: 0 auto;
+		@include mq('lg') {
+			display: block;
+			width: calc(100% - 348px);
+			//everything below is to hide popover="auto" on screens larger than 992px
+			position: static;
+			height: auto;
+			max-width: none;
+			margin: 0;
 			padding: 0;
-			position: absolute;
-			top: 122px;
-			left: 0;
-			background: $white;
-			transform: translateX(100%);
-			transition: transform .4s cubic-bezier(.25,.46,.45,.94),-webkit-transform .4s cubic-bezier(.25,.46,.45,.94);
+			border: none;
+			background: transparent;
+			transform: none !important;
+			overflow: visible;
+			box-shadow: none;
+			inset: auto;
+		}
+
+		@include mq('lg', max) {
+			/* Reset popover browser defaults */
+			width: 85%;
+			max-width: 400px;
+			height: 100dvh;
+			margin: 0 0 0 auto;
+			padding: 0;
+			top: $top-offset;
+			background: rgba(#08649e,.9);
+			border: none;
+
+			/* Performance & Touch optimization */
+			touch-action: pan-y;
+			will-change: transform;
+
+			/* Slide-out base state */
+			transform: translate3d(100%, 0, 0);
+			transition: transform .45s cubic-bezier(.25, .46, .45, .94), display .45s allow-discrete, overlay .45s allow-discrete;
 			overflow-y: auto;
-			&.menu-active { display: block; transform: translateX(0); }
+			overflow-x: hidden;
+
+			/* Dragging visual feedback */
+			&.is-dragging {
+				transition: none !important;
+			}
+
+			/* Popover Open State */
+			&:popover-open {
+				transform: translate3d(0, 0, 0);
+				@starting-style {
+					transform: translate3d(100%, 0, 0);
+				}
+			}
+
+			/* Backdrop styling */
+			&::backdrop {
+				top: $top-offset;
+				background-color: rgba(0, 0, 0, 0.5);
+				opacity: 0;
+				transition: opacity .4s ease, display .4s allow-discrete, overlay .4s allow-discrete;
+			}
+
+			&:popover-open::backdrop {
+				opacity: 1;
+				@starting-style {
+					opacity: 0;
+				}
+			}
 		}
 
 		ul.menu {
@@ -107,29 +142,25 @@
 			margin: 0;
 			padding: 0;
 			@include mq('lg', max) { max-width: 991px; width: 94%; margin: 50px auto 0; }
-			@include mq('sm',max) { width: 100%; padding: 0 20px; }
+			@include mq('sm', max) { width: 100%; padding: 0 20px; }
 			@include mq('lg') { display: flex; justify-content: center; }
 
 			li {
 				list-style: none;
 				margin: 3px 0;
-				@include mq('laptop') {
-					margin: 0 0 0 20px;
-				}
-				@include mq('xl') {
-					margin: 0 0 0 22px;
-				}
+				@include mq('laptop') { margin: 0 0 0 20px; }
+				@include mq('xl') { margin: 0 0 0 22px; }
 				&:before { content: none; }
 				a {
 					display: inline-block;
 					padding: 10px 0;
 					font-weight: bold;
 					font-size: 18px;
-					color: $white;
+					color: $black;
+					@include mq('lg') { color: $white; }
 				}
 			}
 		}
-
 	}
 
 }

@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package OS Theme
+ * @package SZ Starter Theme
  */
 
  get_header();

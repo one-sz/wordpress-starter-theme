@@ -56,11 +56,11 @@ foreach ($custom_post_types_config as $post_type => $settings) {
 		],
 		'hierarchical' => $is_hierarchical, // Set whether CPT is hierarchical
 		'has_archive' => false,
-		'public' => true,
+		'public' => $settings['public'] ?? true,
 		'show_ui' => true,
 		'menu_position' => 20,
-		'rewrite' => ['slug' => $cpt_slug],
-		'show_in_rest'  => true,
+		'rewrite' => ($settings['public'] ?? true) ? ['slug' => $cpt_slug] : false,
+		'show_in_rest' => true,
 		'menu_icon' => $menu_icon,
 		'supports' => $supports,
 	]);
@@ -83,7 +83,7 @@ foreach ($custom_post_types_config as $post_type => $settings) {
 			'publicly_queryable' => $publicly_queryable, // Disables front-end queries for term archive pages
 			'rewrite' => $rewrite, // Disables URL rewrites if set to false
 			'show_in_rest' => true,
-			'show_admin_column'  => true,
+			'show_admin_column' => true,
 			'has_archive' => false,
 		]);
 	}

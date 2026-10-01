@@ -99,6 +99,18 @@ body {
 	word-wrap: normal !important;
 }
 
+//Transition "fade-out - fade-in" effect between pages navigation (comment this if use the one below)
+/* @view-transition { navigation: auto; }
+::view-transition-old(root) { animation: fade-out .3s ease; }
+::view-transition-new(root) { animation: fade-in .3s ease; } */
+
+//Transition "cinematic left - right wipe" effect between pages navigation
+/* @view-transition { navigation: auto; }
+::view-transition-old(root) { animation: wipe-out 700ms cubic-bezier(.77, 0, .18, 1); }
+::view-transition-new(root) { animation: wipe-in 700ms cubic-bezier(.77, 0, .18, 1); }
+@keyframes wipe-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 100% 0 0); } }
+@keyframes wipe-in { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } } */
+
 //Custom scroll bar on Chromium and with mouse
 @media (hover: hover) and (pointer: fine) {
 	* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.3) transparent; }
@@ -117,3 +129,4 @@ body {
 //}
 
 //style="transition-delay:<?= $i*0.1; ?>s"
+// style="transition-delay:<?php echo (($index - 1) % 3 + 1) * 0.15; ?>s" //reset from 3 to 3

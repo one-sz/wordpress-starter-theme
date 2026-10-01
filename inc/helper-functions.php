@@ -127,7 +127,7 @@ function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render
 		'loading' => 'lazy',
 		'fetchpriority' => 'low',
 		'decoding' => 'async',
-		'breakpoint' => 768, // desktop începe de aici
+		'breakpoint' => 768, // desktop breakpoint if needed
 	];
 	$options = array_merge($defaults, $args);
 
@@ -137,12 +137,15 @@ function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render
 		$path = get_attached_file($id);
 		$url = wp_get_attachment_image_url($id, 'full');
 		$srcset = wp_get_attachment_image_srcset($id, 'full');
+		$metadata = wp_get_attachment_metadata($id);
 		// Check file_exists once here, not in HTML for optimization
 		$webp_path = $path ? preg_replace('/\.[^.]+$/', '.webp', $path) : '';
 		$has_webp = !empty($webp_path) && file_exists($webp_path);
 		return (object)[
 			'u' => $url,
 			'ss' => $srcset,
+			'width' => $metadata['width'] ?? 0,
+			'height' => $metadata['height'] ?? 0,
 			'has_webp' => $has_webp,
 			'wu' => $url ? preg_replace('/\.[^.]+$/', '.webp', $url) : '',
 			'wss' => $srcset ? preg_replace('/\.[^.]+(?=\s+\d+w)/', '.webp', $srcset) : ''
@@ -175,7 +178,7 @@ function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render
 ?>
 	<picture class="<?php echo esc_attr($options['picture_class']); ?>">
 		<?php echo $sources_html; ?>
-		<img class="<?php echo esc_attr($options['img_class']); ?>" src="<?php echo esc_url($desktop->u); ?>" alt="<?php echo esc_attr($alt); ?>" sizes="100vw" fetchpriority="<?php echo esc_attr($options['fetchpriority']); ?>" decoding="<?php echo esc_attr($options['decoding']); ?>" loading="<?php echo esc_attr($options['loading']); ?>">
+		<img class="<?php echo esc_attr($options['img_class']); ?>" src="<?php echo esc_url($desktop->u); ?>" alt="<?php echo esc_attr($alt); ?>" sizes="100vw" width="<?php echo esc_attr($desktop->width); ?>" height="<?php echo esc_attr($desktop->height); ?>" fetchpriority="<?php echo esc_attr($options['fetchpriority']); ?>" decoding="<?php echo esc_attr($options['decoding']); ?>" loading="<?php echo esc_attr($options['loading']); ?>">
 	</picture>
 <?php
 }

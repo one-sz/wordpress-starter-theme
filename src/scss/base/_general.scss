@@ -99,6 +99,7 @@ body {
 	word-wrap: normal !important;
 }
 
+
 //Transition "fade-out - fade-in" effect between pages navigation (comment this if use the one below)
 /* @view-transition { navigation: auto; }
 ::view-transition-old(root) { animation: fade-out .3s ease; }
@@ -110,6 +111,7 @@ body {
 ::view-transition-new(root) { animation: wipe-in 700ms cubic-bezier(.77, 0, .18, 1); }
 @keyframes wipe-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 100% 0 0); } }
 @keyframes wipe-in { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } } */
+
 
 //Custom scroll bar on Chromium and with mouse
 @media (hover: hover) and (pointer: fine) {

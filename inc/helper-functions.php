@@ -108,80 +108,82 @@ if (is_admin()) {
 
 
 /**
-* Displays a <picture> element with WebP and Mobile/Desktop support from ACF.
-* @param int|null $desktop_id The desktop image ID.
-* @param int|null $mobile_id The mobile image ID (optional).
-* @param array $args Optional attributes (class, loading, fetchpriority, decoding).
-*/
-function rrp( $desktop_id, $mobile_id = null, $args = [] ) { //rrp is for render_responsive_picture
-	// Run the function only in the frontend to protect performance in admin/Gutenberg
-	if (!$desktop_id) { return; }
-
-	// If the second parameter is an array, it means mobile_id was skipped and args were passed instead
+ * Displays a <picture> element with WebP and Mobile/Desktop support from ACF.
+ *
+ * @param int|null $desktop_id The desktop image ID.
+ * @param int|array|null $mobile_id The mobile image ID or options array if skipped.
+ * @param array $args Optional attributes.
+ */
+function rrp($desktop_id, $mobile_id = null, $args = []) {
+	if (!$desktop_id) return;
 	if (is_array($mobile_id)) { $args = $mobile_id; $mobile_id = null; }
 
-	// Default settings combined with those sent via arguments
-	$defaults = [
+	$opt = array_merge([
 		'picture_class' => 'bg',
 		'img_class' => 'w-100 h-100',
 		'loading' => 'lazy',
 		'fetchpriority' => 'low',
 		'decoding' => 'async',
 		'sizes' => '100vw',
-		'breakpoint' => 768, // breakpoint from 768px up
-	];
-	$options = array_merge($defaults, $args);
+		'breakpoint' => 768,
+	], $args);
 
-	// Internal helper for processing image data
+	// Optimized helper to process image sources and metadata
 	$get_img_data = function($id) {
-		if (!$id) return null;
+		if (!$id || !($url = wp_get_attachment_image_url($id, 'full'))) return null;
 		$path = get_attached_file($id);
-		$url = wp_get_attachment_image_url($id, 'full');
 		$srcset = wp_get_attachment_image_srcset($id, 'full');
-		//$metadata = wp_get_attachment_metadata($id);
-		// Check file_exists once here, not in HTML for optimization
-		$webp_path = $path ? preg_replace('/\.[^.]+$/', '.webp', $path) : '';
-		$has_webp = !empty($webp_path) && file_exists($webp_path);
+		$meta = wp_get_attachment_metadata($id);
+
+		$has_webp = $path && file_exists(preg_replace('/\.[^.]+$/', '.webp', $path));
+
 		return (object)[
 			'u' => $url,
 			'ss' => $srcset,
-			//'width' => $metadata['width'] ?? 0,
-			//'height' => $metadata['height'] ?? 0,
-			'has_webp' => $has_webp,
-			'wu' => $url ? preg_replace('/\.[^.]+$/', '.webp', $url) : '',
-			'wss' => $srcset ? preg_replace('/\.[^.]+(?=\s+\d+w)/', '.webp', $srcset) : ''
+			'w' => $meta['width'] ?? 0,
+			'h' => $meta['height'] ?? 0,
+			'wss' => ($has_webp && $srcset) ? preg_replace('/\.[^.]+(?=\s+\d+w)/', '.webp', $srcset) : '',
 		];
 	};
 
-	$desktop = $get_img_data($desktop_id);
+	if (!($desktop = $get_img_data($desktop_id))) return;
 	$mobile = $get_img_data($mobile_id);
-	$alt = get_post_meta($desktop_id, '_wp_attachment_image_alt', true) ?: get_the_title($desktop_id);
 
-	// Prepare HTML sources in PHP to keep the template clean
+	$alt = esc_attr(get_post_meta($desktop_id, '_wp_attachment_image_alt', true) ?: get_the_title($desktop_id));
+	$sizes = esc_attr($opt['sizes']);
+
+	// Helper to render source tags cleanly
+	$render_sources = function($img, $media = '') use ($sizes) {
+		$html = '';
+		$m_attr = $media ? ' media="' . esc_attr($media) . '"' : '';
+		if ($img->wss) $html .= sprintf('<source%s srcset="%s" type="image/webp" sizes="%s">', $m_attr, esc_attr($img->wss), $sizes);
+		if ($img->ss)  $html .= sprintf('<source%s srcset="%s" sizes="%s">', $m_attr, esc_attr($img->ss), $sizes);
+		return $html;
+	};
+
 	$sources_html = '';
-
-	$mobile_media = '(max-width:' . ($options['breakpoint'] - 1) . 'px)';
-	$desktop_media = '(min-width:' . $options['breakpoint'] . 'px)';
-
 	if ($mobile) {
-		// Scenario A: Both mobile and desktop images exist
-		if ($mobile->has_webp) { $sources_html .= '<source media="' . esc_attr($mobile_media) . '" srcset="' . esc_attr($mobile->wss) . '" type="image/webp" sizes="100vw">'; }
-		if ($mobile->ss) { $sources_html .= '<source media="' . esc_attr($mobile_media) . '" srcset="' . esc_attr($mobile->ss) . '" sizes="100vw">'; }
-
-		if ($desktop->has_webp) { $sources_html .= '<source media="' . esc_attr($desktop_media) . '" srcset="' . esc_attr($desktop->wss) . '" type="image/webp" sizes="100vw">'; }
-		if ($desktop->ss) { $sources_html .= '<source media="' . esc_attr($desktop_media) . '" srcset="' . esc_attr($desktop->ss) . '" sizes="100vw">'; }
+		$sources_html .= $render_sources($mobile, '(max-width:' . ($opt['breakpoint'] - 1) . 'px)');
+		$sources_html .= $render_sources($desktop, '(min-width:' . $opt['breakpoint'] . 'px)');
 	} else {
-		// Scenario B: Only desktop image exists (Fallback for all screen sizes)
-		// We drop the media attribute so these apply to ALL screen widths, forcing WebP first
-		if ($desktop->has_webp) { $sources_html .= '<source srcset="' . esc_attr($desktop->wss) . '" type="image/webp" sizes="100vw">'; }
-		if ($desktop->ss) { $sources_html .= '<source srcset="' . esc_attr($desktop->ss) . '" sizes="100vw">'; }
+		$sources_html .= $render_sources($desktop);
 	}
-?>
-	<picture class="<?php echo esc_attr($options['picture_class']); ?>">
-		<?php echo $sources_html; ?>
-		<img class="<?php echo esc_attr($options['img_class']); ?>" src="<?php echo esc_url($desktop->u); ?>" alt="<?php echo esc_attr($alt); ?>" sizes="<?php echo esc_attr($options['sizes']); ?>" fetchpriority="<?php echo esc_attr($options['fetchpriority']); ?>" decoding="<?php echo esc_attr($options['decoding']); ?>" loading="<?php echo esc_attr($options['loading']); ?>">
-	</picture>
-<?php
+
+	printf(
+		'<picture class="%s">%s<img class="%s" src="%s" alt="%s" sizes="%s" width="%d" height="%d" fetchpriority="%s" decoding="%s" loading="%s"></picture>',
+		esc_attr($opt['picture_class']),
+		$sources_html,
+		esc_attr($opt['img_class']),
+		esc_url($desktop->u),
+		$alt,
+		$sizes,
+		$desktop->w,
+		$desktop->h,
+		esc_attr($opt['fetchpriority']),
+		esc_attr($opt['decoding']),
+		esc_attr($opt['loading'])
+	);
 }
+
 //Disable auto-sizes for img
 add_filter('wp_img_tag_add_auto_sizes', '__return_false');

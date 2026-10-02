@@ -185,5 +185,21 @@ function rrp($desktop_id, $mobile_id = null, $args = []) {
 	);
 }
 
+// Filter output HTML of wp_get_attachment_image to use .webp (for any other JPG or PNG images that are not served through RRP function)
+add_filter('wp_get_attachment_image_attributes', function ($attr, $attachment) {
+	if (empty($attr['src'])) return $attr;
+	$file = get_attached_file($attachment->ID);
+	if (!$file) return $attr;
+	// Fast memory check using static cache to prevent repeated disk I/O on the same page load
+	static $webp_cache = [];
+	$has_webp = $webp_cache[$attachment->ID] ??= file_exists(preg_replace('/\.\w+$/', '.webp', $file));
+	if (!$has_webp) return $attr;
+	// Pattern to swap .jpg, .jpeg, or .png with .webp safely
+	$pattern = '/\.(?:jpe?g|png)(?=$|[\s,?])/i';
+	$attr['src'] = preg_replace($pattern, '.webp', $attr['src']);
+	if (!empty($attr['srcset'])) { $attr['srcset'] = preg_replace($pattern, '.webp', $attr['srcset']); }
+	return $attr;
+}, 10, 2);
+
 //Disable auto-sizes for img
 add_filter('wp_img_tag_add_auto_sizes', '__return_false');

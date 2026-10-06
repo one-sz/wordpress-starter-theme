@@ -12,12 +12,49 @@ $custom_post_types_config = [
 		'hierarchical' => true, // Enable parent-child relationship for this CPT
 		'menu_icon' => 'dashicons-buddicons-buddypress-logo', // Custom dashicon
 		'supports' => ['title', 'editor', 'excerpt', 'thumbnail', 'author'], // Custom supports
-		'taxonomy' => [
-			'slug' => 'services/category',
-			'publicly_queryable' => false, // Disable public links/archives for this taxonomy
-		]
+		'taxonomies' => [
+			[
+				'singular' => 'Category',
+				'plural' => 'Categories',
+				'name' => 'service-category',
+				'slug' => 'services/category',
+				'publicly_queryable' => false, // Disable public links/archives for this taxonomy
+			],
+			[
+				'singular' => 'Type',
+				'plural' => 'Types',
+				'name' => 'service-type',
+				'slug' => 'services/type',
+				'publicly_queryable' => false, // Disable public links/archives for this taxonomy
+			],
+		],
 	],
 ];
+
+	'solutions' => [
+		'plural' => 'Solutions',
+		'singular' => 'Solution',
+		'slug' => 'solution', // Custom CPT rewrite slug
+		'hierarchical' => true, // Enable parent-child relationship for this CPT
+		'supports' => ['title', 'editor', 'excerpt', 'thumbnail', 'author'], // Custom supports
+		'taxonomies' => [
+			[
+				'singular' => 'Solution Category',
+				'plural' => 'Solution Categories',
+				'name' => 'solution-category',
+				'slug' => 'solutions/category',
+				'publicly_queryable' => false,
+			],
+			[
+				'singular' => 'Solution Type',
+				'plural' => 'Solution Types',
+				'name' => 'solution-type',
+				'slug' => 'solutions/type',
+				'publicly_queryable' => false,
+			],
+		],
+	],
+
 
 // Loop through each configuration to register CPTs, Taxonomies, and Admin Filters
 foreach ($custom_post_types_config as $post_type => $settings) {
@@ -66,26 +103,31 @@ foreach ($custom_post_types_config as $post_type => $settings) {
 	]);
 
 	// 2. Register Taxonomy if defined in configuration
-	if (isset($settings['taxonomy'])) {
-		$taxonomy_name = isset($settings['taxonomy']['name']) ? $settings['taxonomy']['name'] : $post_type . '_category';
-
-		// Check if publicly_queryable option is set in taxonomy settings
-		$publicly_queryable = isset($settings['taxonomy']['publicly_queryable']) ? $settings['taxonomy']['publicly_queryable'] : true;
-		$rewrite = $publicly_queryable && isset($settings['taxonomy']['slug']) ? ['slug' => $settings['taxonomy']['slug']] : false;
-
-		register_taxonomy($taxonomy_name, $post_type, [
-			'labels' => [
-				'name' => $settings['plural'] . ' Category',
-				'singular_name' => $settings['singular'] . ' Category',
-			],
-			'hierarchical' => true,
-			'public' => true,
-			'publicly_queryable' => $publicly_queryable, // Disables front-end queries for term archive pages
-			'rewrite' => $rewrite, // Disables URL rewrites if set to false
-			'show_in_rest' => true,
-			'show_admin_column' => true,
-			'has_archive' => false,
-		]);
+	if (isset($settings['taxonomies'])) {
+		foreach ($settings['taxonomies'] as $taxonomy) {
+			$taxonomy_name = $taxonomy['name'];
+			$publicly_queryable = isset($taxonomy['publicly_queryable']) ? $taxonomy['publicly_queryable'] : true;
+			$rewrite = $publicly_queryable && isset($taxonomy['slug']) ? ['slug' => $taxonomy['slug']] : false;
+			register_taxonomy($taxonomy_name, $post_type, [
+				'labels' => [
+					'name' => $taxonomy['plural'],
+					'singular_name' => $taxonomy['singular'],
+					'all_items' => 'All ' . $taxonomy['plural'],
+					'edit_item' => 'Edit ' . $taxonomy['singular'],
+					'view_item' => 'View ' . $taxonomy['singular'],
+					'add_new_item' => 'Add ' . $taxonomy['singular'],
+					'new_item_name' => 'New ' . $taxonomy['singular'],
+					'search_items' => 'Search ' . $taxonomy['plural'],
+				],
+				'hierarchical' => true,
+				'public' => true,
+				'publicly_queryable' => $publicly_queryable,
+				'rewrite' => $rewrite,
+				'show_in_rest' => true,
+				'show_admin_column' => true,
+				'has_archive' => false,
+			]);
+		}
 	}
 
 	// 3. Add Author column in admin list dynamically using the post type key

@@ -1,6 +1,7 @@
 //const $ = window.jQuery; // it is defined global in vite not need anymore
 //import Headroom from 'headroom.js'; //original version based on jQuery, but not so fast
 import Headroom from './vendor/headroom.js'; //vanilla ES6 built, optimized for performance
+import { observeElementInView } from './vendor/inview-observer.js';//inview add class
 
 $(() => {
 	inviewAnimate();
@@ -13,6 +14,7 @@ const initHeadroom = () => {
 }
 
 const inviewAnimate = () => {
+	// Select all elements designated for scroll animations
 	const ivElements = document.querySelectorAll(`
 		.inview-animate--fade,
 		.inview-animate--move-up,
@@ -24,32 +26,25 @@ const inviewAnimate = () => {
 	`);
 
 	ivElements.forEach(ivElement => {
-		const threshold = parseFloat(ivElement.getAttribute('data-threshold')) || 0.05; // Default 0.05 (0.05 = 5% ... 1 = 100%)
-		const options = { threshold: threshold };
+		// Fallback to default 0.05 threshold (5%) if data-threshold is missing
+		const threshold = parseFloat(ivElement.getAttribute('data-threshold')) || 0.05;
 
-		const observer = new IntersectionObserver((entries, observer) => {
-			entries.forEach(entry => {
+		observeElementInView(ivElement, (entry) => {
+			const visibleRatio = entry.intersectionRatio;
 
-				if (entry.isIntersecting) {
-					const visibleRatio = entry.intersectionRatio;
-
-					if (visibleRatio >= threshold) {
-						entry.target.classList.add('inview-active');
-
-						// Once entered into the inview, it should be removed from the observer (for optimization)
-						observer.unobserve(entry.target);
-
-					}/* else {
-						//Removing the class after the element is no longer visible if we want to animate the element every time it becomes visible
-						entry.target.classList.remove('inview-active');
-					} */
-
+			if (entry.isIntersecting) {
+				if (visibleRatio >= threshold) {
+					// Add active class when element enters the viewport
+					entry.target.classList.add('inview-active');
 				}
-
-			});
-		}, options);
-
-		observer.observe(ivElement);
+			} else {
+				// Optional: Remove class when element leaves viewport for repeating animations; use with "repeat: true"
+				//entry.target.classList.remove('inview-active');
+			}
+		}, {
+			threshold: threshold,
+			//repeat: true // Set to true to enable repeating animations on every scroll interaction
+		});
 	});
 }
 
@@ -209,7 +204,3 @@ const headerMenu = () => {
 	}
 
 }
-
-//Used for import/require OLD JS library if you get Uncaught TypeError: $(...).js-library-name is not a function
-/* window.$ = window.jQuery = require('jquery');
-require('js-library-name'); */

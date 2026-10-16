@@ -7,6 +7,9 @@
  * @package SZ Starter Theme
  */
 
+//function enqueue_assets() { wp_enqueue_style( 'single-styles' ); /*wp_enqueue_script( 'single-scripts' );*/ }
+//add_action( 'wp_enqueue_scripts', 'enqueue_assets' );
+
  get_header();
  ?>
 

@@ -41,8 +41,6 @@ function sz_theme_global_enqueues() {
 	// Preload CSS and asynchronous
 	add_filter('style_loader_tag', function($html, $handle, $href, $media) {
 		$async_handles = [
-			'general-styles',
-			'404-styles',
 			//Gravity forms - uncomment if Gravity Forms is used
 			//'gravity_forms_theme_reset',
 			//'gravity_forms_theme_foundation',
@@ -233,11 +231,19 @@ function sz_theme_setup() {
 	//Remove margin-top from admin-bar on tablet and mobile
 	add_theme_support( 'admin-bar', array( 'callback' => '__return_false' ) );
 
-	// Add "Registered" column in Users menu in backend
-	add_filter( 'manage_users_columns', fn( $columns ) => $columns + [ 'registered' => 'Registered' ] );
+	// Add "Registered", "Last Login" and "Last IP" column in Users menu in backend
+	add_filter( 'manage_users_columns', function( $columns ) { return $columns + [ 'registered' => 'Registered', 'last_accessed' => 'Last Login', /* 'last_ip' => 'Last IP', */ ]; } );
 	add_filter( 'manage_users_custom_column', function( $value, $column, $user_id ) {
-		if ( $column === 'registered' ) { $user = get_userdata( $user_id );  return mysql2date( 'd.m.Y H:i', $user->user_registered ); } return $value;
+		if ( $column === 'registered' ) { return mysql2date( 'd.m.Y H:i', get_userdata( $user_id )->user_registered ); }
+		if ( $column === 'last_accessed' ) { $date = get_user_meta( $user_id, 'last_accessed', true ); return $date ? mysql2date( 'd.m.Y H:i', $date ) : '—'; }
+		//if ( $column === 'last_ip' ) { return get_user_meta( $user_id, 'last_ip', true ) ?: '—'; }
+		return $value;
 	}, 10, 3 );
+	// Save last login date and IP
+	add_action( 'wp_login', function( $login, $user ) {
+		update_user_meta( $user->ID, 'last_accessed', current_time( 'mysql', true ) );
+		//update_user_meta( $user->ID, 'last_ip', sanitize_text_field( $_SERVER['REMOTE_ADDR'] ?? '' ) );
+	}, 10, 2 );
 }
 add_action( 'after_setup_theme', 'sz_theme_setup' );
 

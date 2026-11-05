@@ -462,8 +462,6 @@ add_filter('nav_menu_link_attributes', function ($a,$i,$g){
 add_action( 'template_redirect', function() {
 	if ( is_admin() ) return; //Frontend only
 	ob_start(function( $buffer ) {
-		$buffer = preg_replace('/^\s+/m', '', $buffer); //Remove the spaces/tabs at the beginning of each line
-		$buffer = preg_replace('/^\s*$/m', '', $buffer); //Optional: remove empty lines
-		return $buffer;
+		return preg_replace( '/\n\s++/', "\n", $buffer );
 	});
 });

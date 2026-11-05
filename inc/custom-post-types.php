@@ -1,9 +1,8 @@
 <?php
-
 /**
- * Configuration array for Custom Post Types and their taxonomies.
- * To add a new CPT, just add another element to this array.
- */
+* Configuration array for Custom Post Types and their taxonomies.
+* To add a new CPT, just add another element to this array.
+*/
 $custom_post_types_config = [
 	'solutions' => [
 		'plural' => 'Solutions',

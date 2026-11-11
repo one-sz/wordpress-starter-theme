@@ -20,7 +20,7 @@
 @import 'components/index';
 
 @import 'base/fonts';
-//@import 'base/blocks';
+@import 'base/blocks';
 @import 'gutenberg/index';
 
 // ==========================================================================
@@ -37,10 +37,16 @@ html { scrollbar-gutter: stable; }
 .acf-block-component {
 	margin: 24px 0;
 
-	.acf-block-fields {
+	.acf-fields {
+		display: flex;
+		flex-wrap: wrap;
 		border-radius: 3px;
 	}
+
+	.acf-row .acf-field { width: unset; }
+
 	.acf-field {
+		width: 100%;
 		min-height: auto !important;
 		.acf-input {
 			textarea {

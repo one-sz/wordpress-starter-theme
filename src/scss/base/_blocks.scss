@@ -43,14 +43,12 @@ body {
 		padding: 0;
 		font-weight: 700;
 		line-height: 1.1;
-		color: $green;
-		text-wrap: balance;
+		color: $black;
+		//text-wrap: balance;
 	}
 
 	h1, .h1 {
-		//@include fluid-clamp((font-size), 375px, 1440px, 38px, 48px);
-		font-size: 48px;
-		font-size: 600;
+		@include fluid-clamp((font-size), 375px, 1440px, 42px, 58px);
 	}
 	h2, .h2 {
 		@include fluid-clamp((font-size), 390px, 1440px, 36px, 48px);
